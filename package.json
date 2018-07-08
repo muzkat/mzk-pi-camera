@@ -10,6 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "muzkat-ext-app": "^1.0.5",
     "pi-camera": "^1.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^15.2.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }
