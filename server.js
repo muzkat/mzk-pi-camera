@@ -1,58 +1,28 @@
 const express = require('express'),
     PiCamera = require('pi-camera'),
-    path = require('path'),
-    fs = require('fs');
+    cam = require('./services');
 
 const app = express();
 
 app.use('/serve', express.static('public'));
 
 app.get('/', function (req, res) {
-    const searchRecursive = function (dir, pattern) {
-        // This is where we store pattern matches of all files inside the directory
-        let results = [];
 
-        // Read contents of directory
-        fs.readdirSync(dir).forEach(function (dirInner) {
-            // Obtain absolute path
-            dirInner = path.resolve(dir, dirInner);
+    const pictureFolder = './public/';
+    const pictureExtension = '.jpg';
 
-            // Get stats to determine if path is a directory or a file
-            const stat = fs.statSync(dirInner);
+    let c = cam();
+    let files = c.searchRecursive(pictureFolder, pictureExtension);
 
-            // If path is a directory, scan it and combine results
-            if (stat.isDirectory()) {
-                results = results.concat(searchRecursive(dirInner, pattern));
-            }
-
-            // If path is a file and ends with pattern then push it onto results
-            if (stat.isFile() && dirInner.endsWith(pattern)) {
-                results.push(dirInner);
-            }
-        });
-
-        return results;
-    };
-
-    const files = searchRecursive('./public/', '.jpg');
-
-    if (!String.prototype.startsWith) {
-        String.prototype.startsWith = function (searchString, position) {
-            position = position || 0;
-            return this.indexOf(searchString, position) === position;
-        };
-    }
-
-    const filesForAll = [];
-    let fileOnly = "";
+    const filesForAll = [{name: 'nothing to see'}];
+    let fileOnly = '';
     files.forEach(function (filepath, index, array) {
         filepath = String(filepath);
         console.log(filepath);
 //	if(path.startsWith('/opt/www/main/public/'){
         fileOnly = filepath.replace('/opt/www/main/public/', '');
-        console.log(fileOnly);
-        filesForAll.push(fileOnly);
-//	}
+        filesForAll.push({name: fileOnly});
+//
     });
 
     res.send(filesForAll);
