@@ -7,6 +7,15 @@ const app = express();
 app.use('/serve', express.static('public'));
 
 app.get('/', function (req, res) {
+    res.send({
+        appId: 'mzkPiCamera',
+        sysId: 'muzkat-dev',
+        version: '0.0.1'
+    });
+});
+
+
+app.get('/', function (req, res) {
 
     const pictureFolder = './public/';
     const pictureExtension = '.jpg';
@@ -14,16 +23,19 @@ app.get('/', function (req, res) {
     let c = cam();
     let files = c.searchRecursive(pictureFolder, pictureExtension);
 
-    const filesForAll = [{name: 'nothing to see'}];
-    let fileOnly = '';
-    files.forEach(function (filepath, index, array) {
-        filepath = String(filepath);
-        console.log(filepath);
-//	if(path.startsWith('/opt/www/main/public/'){
-        fileOnly = filepath.replace('/opt/www/main/public/', '');
-        filesForAll.push({name: fileOnly});
-//
-    });
+    let filesForAll = [{name: 'nothing to see'}];
+
+    if (files.length > 0) {
+        filesForAll = [];
+        let fileOnly = '';
+
+        files.forEach(function (filepath, index, array) {
+            filepath = String(filepath);
+            console.log(filepath);
+            fileOnly = filepath.replace('/opt/www/main/public/', '');
+            filesForAll.push({name: fileOnly});
+        });
+    }
 
     res.send(filesForAll);
 });
@@ -50,10 +62,10 @@ app.get('/photos/take', function (req, res) {
 
     cam.snap()
         .then((result) => {
-            res.send('captured: ' + outputPath);
+            res.send({captured: outputPath});
         })
         .catch((error) => {
-            res.send('oups');
+            res.send({errorMsg: 'oups'});
         });
 
 });
