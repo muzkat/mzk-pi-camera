@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 });
 
 
-app.get('/', function (req, res) {
+app.get('/photos', function (req, res) {
 
     const pictureFolder = './public/';
     const pictureExtension = '.jpg';
