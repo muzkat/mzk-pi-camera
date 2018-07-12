@@ -1,8 +1,19 @@
-/*
-Created by Erik Woitschig @devbnz
-*/
 const path = require('path'),
-    fs = require('fs');
+    PiCamera = require('pi-camera'),
+    fs = require('fs'),
+    Promise = require('promise');
+;
+
+const pictureExtension = '.jpg';
+
+const cam = new PiCamera({
+    mode: 'photo',
+    output: `${ __dirname }/public/`,
+    width: 640,
+    height: 480,
+    nopreview: true,
+});
+
 
 function mzkPiCamera() {
     return {
@@ -30,6 +41,27 @@ function mzkPiCamera() {
             });
 
             return results;
+        },
+        takePicture: function () {
+            return new Promise(function (resolve, reject) {
+                const filePath = cam.get('output'),
+                    nowDate = new Date(),
+                    dateString = nowDate.getTime(),
+                    filePrefix = 'snap_' + dateString,
+                    fileSuffix = pictureExtension,
+                    fileName = filePrefix + fileSuffix,
+                    outputPath = filePath + fileName;
+
+                cam.set('output', outputPath);
+
+                cam.snap()
+                    .then((result) => {
+                        resolve({captured: outputPath})
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            });
         }
     }
 }
