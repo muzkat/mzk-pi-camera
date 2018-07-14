@@ -6,14 +6,6 @@ const path = require('path'),
 
 const pictureExtension = '.jpg';
 
-const cam = new PiCamera({
-    mode: 'photo',
-    output: `${ __dirname }/public/`,
-    width: 640,
-    height: 480,
-    nopreview: true,
-});
-
 
 function mzkPiCamera() {
     return {
@@ -43,9 +35,17 @@ function mzkPiCamera() {
             return results;
         },
         takePicture: function () {
+            const cam = new PiCamera({
+                mode: 'photo',
+                output: `${ __dirname }/public/`,
+                width: 640,
+                height: 480,
+                nopreview: true,
+            });
+
             return new Promise(function (resolve, reject) {
-                const filePath = cam.get('output'),
-                    nowDate = new Date(),
+                const filePath = cam.get('output');
+                let nowDate = new Date(),
                     dateString = nowDate.getTime(),
                     filePrefix = 'snap_' + dateString,
                     fileSuffix = pictureExtension,
