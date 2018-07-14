@@ -31,7 +31,7 @@ Ext.define('muzkat.pi.camera.Main', {
         xtype: 'tbfill'
     }],
 
-    getAjax: function (url) {
+    takePhoto: function (url) {
         return new Ext.Promise(function (resolve, reject) {
             Ext.Ajax.request({
                 url: '/photos/take',
