@@ -64,7 +64,7 @@ Ext.define('muzkat.pi.camera.Main', {
             }
             var preview = me.down('#preview')
             preview.setHtml(html);
-            var dockedItems = preview.getDockedItems('toolbar[dock="top"]');
+            var dockedItems = preview.getDockedItems('toolbar[dock="bottom"]');
             dockedItems[0].removeAll();
 
             Ext.Array.each(array.reverse(), function (imgObj) {
