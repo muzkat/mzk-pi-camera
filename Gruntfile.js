@@ -14,6 +14,10 @@ module.exports = function (grunt) {
             },
         },
 
+        clean: {
+            folder: ['dist/'],
+        },
+
         concat: {
             options: {
                 stripBanners: true,
@@ -58,11 +62,12 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-stripcomments');
 
 
     grunt.registerTask("dev", ["browserify:dev"]);
     grunt.registerTask('default', ['dev', 'watch']);
-    grunt.registerTask('build', ['concat', 'comments', 'dev']);
+    grunt.registerTask('build', ['concat', 'comments', 'dev', 'clean']);
 };
