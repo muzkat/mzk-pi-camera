@@ -20,10 +20,9 @@ Ext.define('muzkat.pi.camera.Main', {
             itemId: 'preview',
             dockedItems: [{
                 xtype: 'toolbar',
-                dock: 'top',
-                items: [{
-                    text: 'Docked to the top'
-                }]
+                dock: 'bottom',
+                overflowHandler: 'scroller',
+                items: []
             }]
         }],
 
@@ -68,7 +67,7 @@ Ext.define('muzkat.pi.camera.Main', {
             var dockedItems = preview.getDockedItems('toolbar[dock="top"]');
             dockedItems[0].removeAll();
 
-            Ext.Array.each(array, function (imgObj) {
+            Ext.Array.each(array.reverse(), function (imgObj) {
                 dockedItems[0].add({
                     xtype: 'image',
                     src: '/serve/' + imgObj.name,
