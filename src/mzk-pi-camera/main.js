@@ -70,7 +70,7 @@ Ext.define('muzkat.pi.camera.Main', {
 
             Ext.Array.each(array, function (imgObj) {
                 dockedItems[0].add({
-                    xtype: 'img',
+                    xtype: 'image',
                     src: '/serve/' + imgObj.name,
                     height: 90,
                     width: 120
