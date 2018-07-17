@@ -41,4 +41,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask("dev", ["browserify:dev"]);
     grunt.registerTask('default', ['dev','watch']);
+    grunt.registerTask('build', ['dev']);
 };
