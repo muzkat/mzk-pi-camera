@@ -34,7 +34,7 @@ Ext.define('muzkat.pi.camera.Main', {
                 var mainView = btn.up('mzkPiCameraMain');
                 if (Ext.isDefined(mainView) && mainView.isComponent) {
                     mainView.takePhoto().then(function (success) {
-                        Ext.toast(JSON.stringify(success));
+                        mainView.refreshGui();
                     }, function (error) {
                         Ext.toast(error);
                     });
@@ -54,8 +54,12 @@ Ext.define('muzkat.pi.camera.Main', {
     }],
 
     initComponent: function () {
-        var me = this;
         this.callParent(arguments);
+        this.refreshGui();
+    },
+
+    refreshGui: function () {
+        var me = this;
         me.getPhotos().then(function (array) {
             var html = 'Keine Bilder vorhanden';
             if (array.length > 0) {
@@ -63,7 +67,7 @@ Ext.define('muzkat.pi.camera.Main', {
                 var imgName = array[0].name;
                 html = '<img src="/serve/' + imgName + '" height="480" width="640">';
             }
-            var preview = me.down('#preview')
+            var preview = me.down('#preview');
             preview.setHtml(html);
             var dockedItems = preview.getDockedItems('toolbar[dock="bottom"]');
             dockedItems[0].removeAll();
