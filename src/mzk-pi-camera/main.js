@@ -59,6 +59,7 @@ Ext.define('muzkat.pi.camera.Main', {
         me.getPhotos().then(function (array) {
             var html = 'Keine Bilder vorhanden';
             if (array.length > 0) {
+                array = array.reverse();
                 var imgName = array[0].name;
                 html = '<img src="/serve/' + imgName + '" height="480" width="640">';
             }
@@ -67,7 +68,7 @@ Ext.define('muzkat.pi.camera.Main', {
             var dockedItems = preview.getDockedItems('toolbar[dock="bottom"]');
             dockedItems[0].removeAll();
 
-            Ext.Array.each(array.reverse(), function (imgObj) {
+            Ext.Array.each(array, function (imgObj) {
                 dockedItems[0].add({
                     xtype: 'image',
                     src: '/serve/' + imgObj.name,
