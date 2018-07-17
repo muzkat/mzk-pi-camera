@@ -12,15 +12,24 @@ Ext.define('muzkat.pi.camera.Main', {
     items: [{
         xtype: 'panel',
         width: '80%',
+        height: '80%',
         layout: 'fit',
 
         items: [{
-            xtype: 'container',
-            itemId: 'preview'
+            xtype: 'panel',
+            itemId: 'preview',
+            dockedItems: [{
+                xtype: 'toolbar',
+                dock: 'top',
+                items: [{
+                    text: 'Docked to the top'
+                }]
+            }]
         }],
 
         bbar: [{
             text: 'Take Picture',
+            scale: 'medium',
             iconCls: 'x-fa fa-photo',
             handler: function (btn) {
                 var mainView = btn.up('mzkPiCameraMain');
@@ -34,9 +43,14 @@ Ext.define('muzkat.pi.camera.Main', {
             }
         }, {
             text: 'Gallery',
+            scale: 'medium',
             iconCls: 'x-fa fa-file-image-o'
         }, {
             xtype: 'tbfill'
+        }, {
+            text: 'API',
+            scale: 'medium',
+            iconCls: 'x-fa fa-file-image-o'
         }]
     }],
 
@@ -47,9 +61,22 @@ Ext.define('muzkat.pi.camera.Main', {
             var html = 'Keine Bilder vorhanden';
             if (array.length > 0) {
                 var imgName = array[0].name;
-                html = '<img src="/serve/' + imgName + '">';
+                html = '<img src="/serve/' + imgName + '" height="480" width="640">';
             }
-            me.down('#preview').setHtml(html);
+            var preview = me.down('#preview')
+            preview.setHtml(html);
+            var dockedItems = preview.getDockedItems('toolbar[dock="top"]');
+            dockedItems[0].removeAll();
+
+            Ext.Array.each(array, function (imgObj) {
+                dockedItems[0].add({
+                    xtype: 'img',
+                    src: '/serve/' + imgObj.name,
+                    height: 90,
+                    width: 120
+                })
+            });
+
         }, function (error) {
             Ext.toast(error);
         });
