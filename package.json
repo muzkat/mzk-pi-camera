@@ -11,13 +11,13 @@
   "dependencies": {
     "express": "^4.16.3",
     "muzkat-ext-app": "^1.0.5",
-    "npm": "^6.2.0",
+    "npm": "^6.11.3",
     "pi-camera": "^1.1.0",
     "promise": "^8.0.1"
   },
   "devDependencies": {
     "browserify": "^15.2.0",
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.4",
     "grunt-browserify": "^5.2.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
