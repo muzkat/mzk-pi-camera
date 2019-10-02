@@ -1,6 +1,3 @@
-/*
-Created by Erik Woitschig @devbnz
-*/
 Ext.define('muzkat.pi.camera.Api', {
     singleton: true,
 
