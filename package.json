@@ -11,7 +11,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "muzkat-ext-app": "^1.0.5",
-    "npm": "^6.11.3",
+    "npm": "^6.13.4",
     "pi-camera": "^1.1.0",
     "promise": "^8.0.1"
   },
